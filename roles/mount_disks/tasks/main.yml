@@ -1,0 +1,17 @@
+# Mount harddrive
+- name: Create folder if not exists
+  ansible.builtin.file:
+    path: "{{ansible_env.HOME}}/hdd"
+    state: directory
+    mode: '0755'
+- name: Add fstab entry
+  become: true
+  ansible.posix.mount:
+    path: "{{ansible_env.HOME}}/hdd"
+    src: UUID=36111bb1-920f-4fb1-a8dd-da02140a010b #TODO Move to env
+    fstype: ext4
+    opts: noatime
+    state: present
+- name: Mount drive
+  become: true
+  ansible.posix.command: "mount -a"

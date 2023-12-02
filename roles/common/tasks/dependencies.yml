@@ -1,0 +1,22 @@
+---
+# This installs all the necessary dependencies.
+- name: Update package cache
+  ansible.builtin.apt:
+    update_cache: yes
+  become: yes
+- name: Upgrade all packages (safe)
+  ansible.builtin.apt:
+     upgrade: safe
+  become: yes
+- name: Install dependencies
+  ansible.builtin.apt:
+    name: "{{item}}"
+    state: present
+    update_cache: yes
+  loop:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - gnupg-agent
+    - software-properties-common
+  become: yes

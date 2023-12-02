@@ -1,0 +1,7 @@
+# Setup homelab
+- hosts: masters
+  gather_facts: yes
+  roles:
+  - role: 
+    - media_server
+    - start_services

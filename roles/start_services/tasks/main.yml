@@ -1,0 +1,21 @@
+--- 
+- name: Start docker service if not running
+  become: true
+  ansible.builtin.service:
+    name: docker
+    state: started
+- name: Copy wireguard config file
+  ansible.builtin.copy:
+    src: wg0.conf
+    dest: "{{ ansible_env.HOME }}/hdd/config/wireguard/wg_confs"
+- name: Tear down
+  become: true
+  community.docker.docker_compose:
+    project_src: "{{ ansible_env.HOME }}/media_server"
+    state: absent
+- name: Rebuild
+  become: true
+  community.docker.docker_compose:
+    project_src: "{{ ansible_env.HOME }}/media_server"
+    build: true
+    state: present

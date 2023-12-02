@@ -1,0 +1,25 @@
+---
+# Clone media server repo.
+- name: Get stats of repo path
+  ansible.builtin.stat:
+    path: "{{ repo_path }}"
+  register: p
+- name:  Repo exists?
+  ansible.builtin.debug:
+    msg: "{{p}} exists and is a directory. Skipping git clone"
+  when: p.stat.isdir is defined and p.stat.isdir == false
+- name: Checkout media server repo
+  ansible.builtin.git:
+    repo: "https://{{ git_username }}:{{ git_token }}@github.com/nfl-nzr/media_server.git"
+    dest: "{{ansible_env.HOME}}/media_server"
+    accept_hostkey: yes
+    version: main
+  environment:
+    GIT_TERMINAL_PROMPT: no
+    GIT_SSL_NO_VERIFY: yes
+  when: p.stat.isdir is defined and p.stat.isdir == True
+- name: Create .env file
+  ansible.builtin.template:
+    force: no
+    src: env.j2
+    dest: "{{ repo_path }}/.env"

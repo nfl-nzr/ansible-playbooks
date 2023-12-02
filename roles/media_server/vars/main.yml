@@ -1,0 +1,3 @@
+repo_path: "{{ansible_env.HOME}}/media_server"
+media_dir: "{{ansible_env.HOME}}/hdd/movies"
+config_dir: "{{ansible_env.HOME}}/hdd/config"
