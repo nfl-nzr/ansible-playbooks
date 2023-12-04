@@ -27,6 +27,6 @@
   ansible.builtin.pip:
     name: "{{item}}"
   loop:
-    - jsondiff # Move to common dependencies
+    - jsondiff # Might remove as docker stack is not used anymore
     - docker
     - docker-compose
