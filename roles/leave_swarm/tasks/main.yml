@@ -1,0 +1,6 @@
+#Force leave a swarm
+- name: Leaving swarm
+  community.docker.docker_swarm:
+    state: absent
+    force: true
+  become: true

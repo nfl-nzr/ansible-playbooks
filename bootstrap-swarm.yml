@@ -1,0 +1,9 @@
+# Create new swarm.
+- name: Bootstraping maters. 
+  hosts: masters
+  roles:
+    - bootstrap_swarm_masters
+- name: Bootstraping slaves. 
+  hosts: slaves
+  roles:
+    - bootstrap_swarm_slaves

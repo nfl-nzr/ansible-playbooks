@@ -1,7 +1,20 @@
-# Setup homelab
-- hosts: masters
-  gather_facts: yes
+# Patch and install required dependencies for all nodes.
+- hosts: 
+    - masters
+    - slaves
+  gather_facts: true
   roles:
-  - role: 
+   - common
+# Mount disks and clone media_server.
+- hosts: masters
+  gather_facts: true
+  roles:
     - media_server
-    - start_services
+    - mount_disks
+# Create new swarm.
+- hosts: masters
+  roles:
+    - bootstrap_swarm_masters
+- hosts: slaves
+  roles:
+    - bootstrap_swarm_slaves

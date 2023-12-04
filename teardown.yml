@@ -1,0 +1,6 @@
+# Remove all nodes from swarm. Including managers  during teardown.
+- hosts:
+    - masters
+    - slaves
+  roles:
+   - leave_swarm

@@ -7,7 +7,6 @@
 - name:  Repo exists?
   ansible.builtin.debug:
     msg: "{{p}} exists and is a directory. Skipping git clone"
-  when: p.stat.isdir is defined and p.stat.isdir == false
 - name: Checkout media server repo
   ansible.builtin.git:
     repo: "https://{{ git_username }}:{{ git_token }}@github.com/nfl-nzr/media_server.git"
@@ -17,7 +16,6 @@
   environment:
     GIT_TERMINAL_PROMPT: no
     GIT_SSL_NO_VERIFY: yes
-  when: p.stat.isdir is defined and p.stat.isdir == True
 - name: Create .env file
   ansible.builtin.template:
     force: no

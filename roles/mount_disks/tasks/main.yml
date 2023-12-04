@@ -13,5 +13,5 @@
     opts: noatime
     state: present
 - name: Mount drive
+  ansible.builtin.command: "mount -a"
   become: true
-  ansible.posix.command: "mount -a"

@@ -1,0 +1,9 @@
+# Shutdown servers
+- hosts: all
+  gather_facts: yes
+  tasks:
+  - name: Shutdown
+    become: true
+    community.general.shutdown:
+      
+      

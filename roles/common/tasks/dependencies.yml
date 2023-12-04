@@ -3,10 +3,12 @@
 - name: Update package cache
   ansible.builtin.apt:
     update_cache: yes
+    state: fixed
   become: true
 - name: Upgrade all packages (safe)
   ansible.builtin.apt:
      upgrade: safe
+     state: fixed
   become: true
 - name: Install dependencies
   ansible.builtin.apt:

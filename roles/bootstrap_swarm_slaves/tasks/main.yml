@@ -1,0 +1,8 @@
+# Bootstrap worker nodes here.
+- name: Initialize worker nodes
+  community.docker.docker_swarm:
+    state: join
+    advertise_addr: "{{ansible_host}}"
+    join_token: "{{hostvars.mastera.swarm_metadata.swarm_facts.JoinTokens.Worker}}"
+    remote_addrs: ["{{hostvars.mastera.ansible_host}}"]
+  become: true

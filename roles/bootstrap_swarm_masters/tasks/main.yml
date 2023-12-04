@@ -1,0 +1,12 @@
+# Bootstrap master node. Probably split this up later to one master or add when condition to prevent creating multiple swarms.
+- name: Initialize swarm master node
+  become: true
+  community.docker.docker_swarm:
+    state: present
+    labels:
+      type: "compute"
+  register: swarm_metadata
+- name: Set swarm metadata information for slaves
+  ansible.builtin.set_fact:
+    swarm_meta: "{{swarm_metadata}}"
+    cacheable: true
