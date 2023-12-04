@@ -23,3 +23,16 @@
     - gnupg-agent
     - software-properties-common
   become: true
+# Install NFS dependencies
+- name: Installing NFS server components
+  ansible.builtin.apt:
+    update_cache: true
+    name: nfs-kernel-server
+  become: true
+  when: install_nfs_server_components
+- name: Installing NFS client components
+  ansible.builtin.apt:
+    update_cache: true
+    name: nfs-common
+  become: true
+  when: install_nfs_client_components

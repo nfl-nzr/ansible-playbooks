@@ -1,0 +1,19 @@
+- name: Export the hdd with all the items on the cluster.
+  vars: 
+    share_with_servers: "{{groups.all | difference([inventory_hostname])}}"
+  ansible.builtin.template:
+    src: exports.j2
+    dest: "/etc/exports"
+    mode: 644
+    owner: root
+    group: root
+  become: true
+- name: Restart nfs-kernel-server
+  ansible.builtin.systemd:
+    daemon_reload: yes
+    state: started
+    name: nfs-kernel-server
+  become: true
+- name: Reexport all directories
+  ansible.builtin.command: "exportfs -r"
+  become: true

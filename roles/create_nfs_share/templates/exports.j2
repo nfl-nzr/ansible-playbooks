@@ -1,0 +1,3 @@
+{% for server in share_with_servers %}
+{{hdd_mount_point}} {{ hostvars[server].ansible_host }}(rw,sync,no_subtree_check,no_root_squash)
+{% endfor %}

@@ -1,0 +1,9 @@
+# Mount NFS volume on workers
+- name: Mount NFS shared drive
+  ansible.posix.mount:
+    src: "{{hostvars.mastera.ansible_host}}:{{hdd_mount_point}}"
+    path: "{{hdd_mount_point}}"
+    opts: rw,sync,hard
+    state: mounted
+    fstype: nfs
+  become: true
