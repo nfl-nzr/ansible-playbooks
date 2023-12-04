@@ -1,20 +1,26 @@
-# Patch and install required dependencies for all nodes.
-- hosts: 
-    - masters
-    - slaves
+- hosts: masters
   gather_facts: true
   roles:
-   - common
-# Mount disks and clone media_server.
-- hosts: masters
+    - common
+    - bootstrap_swarm_masters
+  vars: 
+    install_nfs_server_components: true
+    install_nfs_client_components: false
+- hosts: slaves
+  gather_facts: true
+  roles:
+    - common
+    - bootstrap_swarm_slaves
+  vars: 
+    install_nfs_server_components: false
+    install_nfs_client_components: true
+- hosts: mastera
   gather_facts: true
   roles:
     - media_server
     - mount_disks
-# Create new swarm.
-- hosts: masters
-  roles:
-    - bootstrap_swarm_masters
+    - create_nfs_share
 - hosts: slaves
-  roles:
-    - bootstrap_swarm_slaves
+  gather_facts: true
+  roles: 
+    - mount_nfs_share
